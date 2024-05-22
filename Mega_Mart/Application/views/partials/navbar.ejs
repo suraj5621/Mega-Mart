@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <a class="navbar-brand" href="#"><em><strong>Mega Mart</strong></em></a>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/products">Home</a>
+        </li>
+        <% if(currentUser && currentUser.role === 'seller'){ %>
+          <li class="nav-item">
+            <a class="nav-link" href="/product/new">New</a>
+          </li>
+        <% } %>
+        <!-- <li class="nav-item">
+          <a class="nav-link disabled">Disabled</a>
+        </li> -->
+      </ul>
+
+      <form class="d-flex" role="search" action="/products" method="get">
+        <select name="category" id="category" class="form-select me-3" style="width: 250px;" required>
+          <option value="All">All</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Clothing">Clothing</option>
+        </select>
+        <button class="btn btn-outline-success" type="submit" style="min-width: 100px;">Search</button>
+      </form>
+
+      <div class="d-flex ms-auto">
+        <% if(!currentUser){ %>
+          <a href="/login" class="nav-link mx-2">Login</a>
+        <% } else { %>
+          <a href="#" class="nav-link"><em>Hello, <%=currentUser.username%></em></a>
+          <a href="/user/cart" class="nav-link mx-2">
+            <i class="fas fa-shopping-cart"></i>
+            <sub><span class="badge bg-danger"><%=currentUser.cart.length%></span></sub>
+          </a>
+
+          <a href="/user/wishlist" class="nav-link mx-2" data-tip="Wishlist">
+            <i class="fa-solid fa-heart"  data-tip="Wishlist"></i>
+            <sub><span class="badge bg-danger"><%=currentUser.wishlist.length%></span></sub>
+          </a>
+
+          <form action="/logout" method="post">
+            <button class="nav-link mx-2">Logout</button>
+          </form>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>
